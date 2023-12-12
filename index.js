@@ -145,7 +145,7 @@ function getUserStatus(age) {
 
   if(age <= 18) {
     return 'Неповнолітній'
-  }else if (age <=67) {
+  }else if (age<= 18, age <=67) {
     return 'Дорослий'
   }else {
     return 'Пенсіонер'
@@ -309,12 +309,15 @@ function memoizedArea() {
 
   return (side) => {
     if(side===arg){
-      return console.log('Fetching from cache');
-    }
-
-    const prevSide = side * side ;
-     side = prevSide
-    return prevSide;
+      console.log('Fetching from cache ');
+    }else{
+      console.log('Calculating result')
+    };
+    res=side*side;
+    arg=side;
+    // const prevSide = arg;
+    const  prevResult = res;
+    return prevResult;
   }
 
   // Ініціалізуємо примітивні змінні для зберігання попереднього аргументу та результату
@@ -341,6 +344,7 @@ console.log("squareArea(6)", squareArea(6)); // Виводить "Fetching from 
 
 // Задача 16: Задача: створити функціональний вираз для обчислення кубу числа.
 let cube = function (n) {
+  return n**3;
   // Повертаємо n в кубі
 };
 
@@ -349,19 +353,43 @@ console.log("cube(3)", cube(3)); // Виведе: 27
 
 // Задача 17: створити дві функції, одна з яких збільшує число на 1, а інша - множить число на 2, а потім створити композицію цих функцій.
 function increment(n) {
+  return n + 1;
   // Повертаємо n + 1
 }
 
 function double(n) {
+  return n * 2;
   // Повертаємо n*2
 }
 
 function compose(func1, func2) {
+  return (n) => {
+    return func2(func1(n))
+  }
   // Повертаємо нову функцію, яка приймає аргумент n
   // Повертаємо func2, в яку передаємо func1 з аргументом n
 }
 
 // Створюємо змінну createCompose якій присвоємо результат виконання функції compose з аргументами increment та double
+let createCompose = compose(increment,double)
 console.log("Завдання 17 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("createCompose(5)", createCompose(5)); // Виведе: 12 (5+1=6, 6*2=12)
+console.log("createCompose(5)", createCompose(5)); // Виведе: 12 (5+1=6, 6*2=12)
+
+
+//////
+function memoizedFibonacci(n, memo = {}) {
+    if(n===0 || n===1){
+      return n;
+    }
+     //використовуємо мемоізований результатбякщо воно обчислене
+    if(memo = [n]){
+      return memo = [n]; 
+    }
+
+    memo[n] = memoizedFibonacci(n-1,memo) + memoizedFibonacci(n-2,memo);
+    return memo[n]
+}
+
+console.log(memoizedFibonacci(5)) //Результат 5
+console.log(memoizedFibonacci(8)) //Результат 8
